@@ -11,7 +11,7 @@ public class Enemy_Script : MonoBehaviour
 
     public int armor = 10;
 
-    public bool hitCheck = false;
+    public byte hitCheck = 0;
 
     int speed = 5;
 

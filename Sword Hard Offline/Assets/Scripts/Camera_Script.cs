@@ -5,61 +5,59 @@ using static PlayerData_Script;
 
 public class Camera_Script : MonoBehaviour
 {
-    RaycastHit[] hit = new RaycastHit[2];
-    Ray[] rays = new Ray[2];
-    GameObject[] hit_Buffer = new GameObject[2];
+    static int rayN = 4;
+
+    Ray[] rays = new Ray[rayN];
+    RaycastHit[] hit = new RaycastHit[rayN];
+    GameObject[] hit_Buffer = new GameObject[rayN];
+    Transform[] SwordPoint = new Transform[rayN];
 
     Transform SwordPointTop;
     Transform SwordPointMiddle;
 
     void Start()
     {
-        SwordPointTop = Sword.transform.Find("PointTop");
-        SwordPointMiddle = Sword.transform.Find("PointMiddle");
+        for (byte indx = 0; indx < rayN; indx++)
+        {
+            SwordPoint[indx] = Sword.transform.Find($"Point_{indx}");
+        }
     }
 
     void Update()
     {
-        rays[0] = new Ray(this.transform.position, SwordPointTop.transform.position - this.transform.position);
-        rays[1] = new Ray(this.transform.position, SwordPointMiddle.transform.position - this.transform.position);
-
-        for (byte indx = 0; indx < hit.Length; indx++)
+        for (byte indx = 0; indx < rayN; indx++)
         {
-            Debug.Log("Цикл");
+            rays[indx] = new Ray(gameObject.transform.position, SwordPoint[indx].position - gameObject.transform.position);
+        }
+
+        for (byte indx = 0; indx < rays.Length; indx++)
+        {
             if (Physics.Raycast(rays[indx], out hit[indx], 300))
             {
-                Debug.Log("Рейкаст");
-
                 GameObject hit_Object = hit[indx].transform.gameObject;
 
-                if (hit[indx].transform.gameObject.CompareTag("Enemy"))
+                if (
+                    hit[indx].transform.gameObject.CompareTag("Enemy") && 
+                    hit_Object != hit_Buffer[indx]
+                    )
                 {
-                    Debug.Log("Проверка тега");
-
-                    if (hit_Object.GetComponent<Enemy_Script>().hitCheck == false && hit_Object != hit_Buffer[indx])
+                    if (hit_Object.GetComponent<Enemy_Script>().hitCheck == 0)
                     {
-                        Debug.Log($"Ray №{indx + 1}");
-                        Debug.Log(hit_Object);
-
                         hit_Object.GetComponent<Enemy_Script>().TakeDamage();
-
-                        hit_Object.GetComponent<Enemy_Script>().hitCheck = true;
-                        if (hit_Buffer[indx] != null && hit_Buffer[indx].CompareTag("Enemy"))
-                        {
-                            hit_Buffer[indx].GetComponent<Enemy_Script>().hitCheck = false;
-                        }
-
-                        hit_Buffer[indx] = hit_Object;
                     }
+                    hit_Object.GetComponent<Enemy_Script>().hitCheck++;
                 }
-                else
+
+                if (
+                    hit_Object != hit_Buffer[indx] && 
+                    hit_Buffer[indx] != null && 
+                    hit_Buffer[indx].CompareTag("Enemy")
+                   )
                 {
-                    if (hit_Buffer[indx] != null && hit_Buffer[indx].CompareTag("Enemy"))
-                    {
-                        hit_Buffer[indx].GetComponent<Enemy_Script>().hitCheck = false;
-                    }
-                    hit_Buffer[indx] = hit_Object;
+                    hit_Buffer[indx].GetComponent<Enemy_Script>().hitCheck--;
                 }
+
+                hit_Buffer[indx] = hit_Object;
             }
         }
     }
