@@ -5,12 +5,18 @@ using UnityEngine;
 public class PlayerData_Script : MonoBehaviour
 {
     public static GameObject Sword;
-    int BestScore = 0;
+    public static TheSword_Script SwordStats;
+    public GameObject TheSword;
+
+    public static int GoldAmount;
+    public static int BestScore;
 
     void Awake()
     {
-        Sword = GameObject.Find("TheGreateSword");
-        Debug.Log("Сворд инициализация");
+        Sword = TheSword;
+        SwordStats = Sword.GetComponent<TheSword_Script>();
+        Debug.Log("Инициализация основных данных");
+        
     }
 
     void Update()

@@ -192,6 +192,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swDamage: 10
+  critChance: 0.2
+  armorPenChance: 0.15
+  Camera: {fileID: 0}
 --- !u!95 &1637576817681757547
 Animator:
   serializedVersion: 3
