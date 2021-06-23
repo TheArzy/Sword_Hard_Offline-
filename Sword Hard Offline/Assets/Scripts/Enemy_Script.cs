@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +6,10 @@ using static PlayerData_Script;
 
 public class Enemy_Script : MonoBehaviour
 {
-    public int level = 1;
-    public int health = 50;
-    int armor = 5;
+    public float level = 1;
+    public float health = 50;
+    public float armor = 5;
+    int gold = 25;
     int speed = 10;
 
     public byte hitCheck = 0;
@@ -18,24 +18,33 @@ public class Enemy_Script : MonoBehaviour
     public GameObject CritInd, ArmorPenInd;
     Text health_bar;
     Transform CanvasTrans;
-    Transform IndicatorSpawnPos;
 
     void Start()
     {
         CanvasTrans = gameObject.transform.Find("Canvas");
         health_bar = gameObject.transform.Find("Canvas").Find("Health").GetComponent<Text>();
-        IndicatorSpawnPos = gameObject.transform.Find("Canvas").Find("IndicatorSpawn");
+
+        if (level > 1)
+        {
+            health += (int)(health * (2 * level / 10f));
+            armor += (int)(armor * (level / 10f));
+            gold += (int)(gold * (level / 10f));
+        }
+        Debug.Log($"Деление уровня {level / 10f}");
+
+        speed = Random.Range(speed, speed+7);
+
     }
 
     void FixedUpdate()
     {
-        gameObject.transform.Translate(new Vector3(0,0,1) * speed * Time.fixedDeltaTime);
+        gameObject.transform.Translate(speed * Time.fixedDeltaTime * Vector3.forward);
         health_bar.text = health.ToString();
     }
 
     public void TakeDamage()
     {
-        int damage = SwordStats.swDamage;
+        float damage = SwordStats.swDamage;
         if (UnityEngine.Random.value < SwordStats.critChance)
         {
             damage *= 2;
@@ -45,6 +54,7 @@ public class Enemy_Script : MonoBehaviour
         if (UnityEngine.Random.value > SwordStats.armorPenChance)
         {
             damage -= armor;
+            if (damage < 0) damage = 0;
         }
         else
         {
@@ -56,6 +66,7 @@ public class Enemy_Script : MonoBehaviour
 
         if (health <= 0)
         {
+            GiveGold();
             Death();
         }
     }
@@ -68,11 +79,14 @@ public class Enemy_Script : MonoBehaviour
 
     void GiveGold()
     {
-        
+        GoldAmount += gold;
+        PlayerGoldAddUpdate(gold);
+        PlayerGoldUpdate();
     }
 
     private void Death()
     {
         Destroy(gameObject);
+        enemyCount--;
     }
 }

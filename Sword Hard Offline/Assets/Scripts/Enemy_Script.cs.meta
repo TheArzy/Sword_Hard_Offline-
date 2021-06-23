@@ -3,7 +3,10 @@ guid: 76062f51240acda45bda74cc3a33515a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CritInd: {fileID: 6342411937623138572, guid: 316416ec364a37a4eab7320150421f73, type: 3}
+  - ArmorPenInd: {fileID: 7558596624825993282, guid: fcee7ac793247614095d0d48ffceabb9, type: 3}
+  - GoldInd: {fileID: 6342411937623138572, guid: 23a9cd6c0cdda244a83764e1f55a7bf6, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -319,6 +319,7 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/VSSettingsProvider.ref.dll"
 "Assets/Scripts/Camera_Script.cs"
+"Assets/Scripts/DeathTr_Script.cs"
 "Assets/Scripts/EnemySpawn_Script.cs"
 "Assets/Scripts/Enemy_Script.cs"
 "Assets/Scripts/IndicatorBehaviour_Script.cs"

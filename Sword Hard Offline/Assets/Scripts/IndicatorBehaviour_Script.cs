@@ -2,12 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static PlayerData_Script;
 
 public class IndicatorBehaviour_Script : MonoBehaviour
 {
     DateTime dtime;
-    public int lifespan;
     Vector3 vector;
+
+    float speed = 0.6f;
+    public int lifespan;
 
     void Start()
     {
@@ -17,7 +21,7 @@ public class IndicatorBehaviour_Script : MonoBehaviour
 
     void FixedUpdate()
     {
-        gameObject.transform.Translate(vector * 0.6f);
+        gameObject.transform.Translate(vector * speed);
         if (DateTime.Now.Subtract(dtime).TotalMilliseconds > lifespan)
         {
             Destroy(gameObject);

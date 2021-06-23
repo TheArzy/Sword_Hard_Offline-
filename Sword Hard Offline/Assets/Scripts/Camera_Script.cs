@@ -20,7 +20,6 @@ public class Camera_Script : MonoBehaviour
         {
             SwordPoint[indx] = Sword.transform.Find($"Point_{indx}");
         }
-        Enemy = GetComponent<Enemy_Script>();
         Debug.Log("Инициализация хитсканера");
     }
 
