@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2223228112310172428
+--- !u!1 &5731153153816502850
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,31 +8,31 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8827767563230416958}
+  - component: {fileID: 5047002464200507018}
   m_Layer: 0
-  m_Name: IndicatorSpawn
+  m_Name: InpSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &8827767563230416958
+--- !u!224 &5047002464200507018
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2223228112310172428}
+  m_GameObject: {fileID: 5731153153816502850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8518822162311108114}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 400}
+  m_AnchoredPosition: {x: 0, y: 300}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8518822162311108125
@@ -65,8 +65,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -0.65}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_Children:
-  - {fileID: 8827767563230416958}
   - {fileID: 8518822162446108723}
+  - {fileID: 5047002464200507018}
   m_Father: {fileID: 8518822163022642946}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
@@ -166,7 +166,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8518822162311108114}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -269,7 +269,8 @@ MonoBehaviour:
   IndLifespan: 700
   CritInd: {fileID: 6342411937623138572, guid: 316416ec364a37a4eab7320150421f73, type: 3}
   ArmorPenInd: {fileID: 7558596624825993282, guid: fcee7ac793247614095d0d48ffceabb9, type: 3}
-  GoldInd: {fileID: 6342411937623138572, guid: 23a9cd6c0cdda244a83764e1f55a7bf6, type: 3}
+  HealthBar: {fileID: 8518822162446108722}
+  IndSpawnPoint: {fileID: 5731153153816502850}
 --- !u!33 &8518822163022642956
 MeshFilter:
   m_ObjectHideFlags: 0

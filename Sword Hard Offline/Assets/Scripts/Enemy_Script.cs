@@ -16,13 +16,16 @@ public class Enemy_Script : MonoBehaviour
 
     public int IndLifespan;
     public GameObject CritInd, ArmorPenInd;
+    public GameObject HealthBar;
+    public GameObject IndSpawnPoint;
+
     Text health_bar;
-    Transform CanvasTrans;
+    Transform ISPoint;
 
     void Start()
     {
-        CanvasTrans = gameObject.transform.Find("Canvas");
-        health_bar = gameObject.transform.Find("Canvas").Find("Health").GetComponent<Text>();
+        ISPoint = IndSpawnPoint.transform;
+        health_bar = HealthBar.GetComponent<Text>();
 
         if (level > 1)
         {
@@ -30,7 +33,6 @@ public class Enemy_Script : MonoBehaviour
             armor += (int)(armor * (level / 10f));
             gold += (int)(gold * (level / 10f));
         }
-        Debug.Log($"Деление уровня {level / 10f}");
 
         speed = Random.Range(speed, speed+7);
 
@@ -73,13 +75,14 @@ public class Enemy_Script : MonoBehaviour
 
     void IndSpawn(GameObject Indicator)
     {
-        IndicatorBehaviour_Script stats = Instantiate(Indicator, CanvasTrans).GetComponent<IndicatorBehaviour_Script>();
+        IndicatorBehaviour_Script stats = Instantiate(Indicator, ISPoint).GetComponent<IndicatorBehaviour_Script>();
         stats.lifespan = IndLifespan;
     }
 
     void GiveGold()
     {
         GoldAmount += gold;
+        ReceivedGold += gold;
         PlayerGoldAddUpdate(gold);
         PlayerGoldUpdate();
     }

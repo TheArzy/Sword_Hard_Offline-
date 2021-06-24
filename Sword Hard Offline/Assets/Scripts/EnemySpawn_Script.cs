@@ -7,32 +7,28 @@ using static PlayerData_Script;
 public class EnemySpawn_Script : MonoBehaviour
 {
 
-    DateTime dtime;
-    DateTime waveStartTime;
-    int tspan;
-    int wspan;
+    public DateTime dtime;
+    public DateTime waveStartTime;
+    public int tspan;
+    public int wspan;
 
     public int spRateMin, spRateMax;
     public int waveDuration;
     public int waveChangePause;
-    public bool spawnFlag;
-    public bool newWaveFlag;
-    public bool GameOver;
 
     public GameObject Enemy;
-    public GameObject StartButton;
     Transform Portal;
 
     private void Start()
     {
         Portal = gameObject.transform;
+
         dtime = DateTime.Now;
         waveStartTime = DateTime.Now;
+
         newWaveFlag = false;
         GameOver = false;
-        waveCount = 1;
-        WaveUpdate();
-        Debug.Log($"Начальная волна {waveCount}");
+
         Debug.Log("Инициализация спаунера");
     }
 
@@ -70,11 +66,20 @@ public class EnemySpawn_Script : MonoBehaviour
 
     public void GameStart()
     {
+        ReceivedGold = 0;
         playerHealth = 3;
         PlayerHealthUpdate();
+
+        dtime = DateTime.Now;
+        waveStartTime = DateTime.Now;
+
         spawnFlag = true;
         GameOver = false;
-        StartButton.SetActive(false);
+
+        PlData.MainMenu.SetActive(false);
+        PlData.InGameInterface.SetActive(true);
+        PlData.GoldAddInd.SetActive(false);
+        PlData.TheSword.SetActive(true);
     }
 
     void EnemySpawn(GameObject Enemy, int wave)
@@ -100,21 +105,41 @@ public class EnemySpawn_Script : MonoBehaviour
         waveStartTime = DateTime.Now;
     }
 
-    void PlayerDeath()
+    public static void PlayerDeath()
     {
-        Debug.Log("UrDead");
         spawnFlag = false;
         newWaveFlag = false;
         GameOver = true;
-        StartButton.SetActive(true);
+        Time.timeScale = 1;
 
+        if (waveCount - 1 > BestScore)
+        {
+            BestScoreUpdate();
+            PlData.NewRecordInd.SetActive(true);
+        }
+
+        int goldBonus = 0;
+        if (waveCount > 1)
+        {
+            goldBonus = (100 * waveCount * waveCount) / 2;
+            GoldAmount += goldBonus;
+        }
+        PlayerGoldRecieveUpdate(goldBonus);
+
+        ScoreUpdate();
+        enemyCount = 0;
         waveCount = 1;
+        WaveUpdate();
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
             Destroy(enemy);
         }
+
+        PlData.ResultMenu.SetActive(true);
+        PlData.InGameInterface.SetActive(false);
+        PlData.TheSword.SetActive(false);
     }
 
 }
